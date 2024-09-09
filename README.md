@@ -77,12 +77,12 @@ docker tag {ID_IMAGE} {NAME_IMAGE}
 docker run my_figlet  figlet message  
 ```
 
-###Dockerfile demo
+### Dockerfile demo
 
 
 ```sh
 ### Dockerfile                                                                     
-cat <<EOL > Dockerfile                                                          
+cat <<EOL > dockerfile.yaml                                                        
 FROM ubuntu                                                                     
 RUN apt update                                                                  
 RUN apt install figlet                                                          
@@ -90,7 +90,7 @@ EOL
 
 docker build dockerfile.yaml                                                                 
 docker images                                                                   
-docker run {ID_IMAGE}  figlet Dockerfile                                        
+docker run {ID_IMAGE}  figlet dockerfile.yaml                                        
 ```
                                                                                 
 ### Build cache and taggind                                                       
