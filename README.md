@@ -1,6 +1,6 @@
 # Docker Workshop 
 
-This repo contains a list of commands used on workshop "Docker". It includes also sample application we can build and run by own. 
+This repo contains a list of commands used on workshop "Docker". It includes also sample application we can build and run by own or using https://killercoda.com/docker
 
 
 ## Exercise 1
@@ -8,10 +8,11 @@ This repo contains a list of commands used on workshop "Docker". It includes als
 Running first containers:
 
 ```sh
+#test run
 docker container run hello-world
 docker run buysybox echo Hello Tester Day
 
-
+#Playing around with figlet
 docker container run -it ubuntu bash
 figlet hello
 apt update
@@ -25,6 +26,8 @@ docker container exec -it <container_id> bash
 
 
 ### NGINX
+
+Port exposing with nginx on 80
 ```sh
 docker pull nginx
 docker container run -d -p 80:80 --name mynginx nginx
@@ -36,25 +39,32 @@ docker container run -d -p 80:80 --name mynginx nginx
 How to view output
 
 ```sh
+#simple output
 docker run  jpetazzo/clock          
 docker run -d jpetazzo/clock        
 docker logs {ID_CONTAINER}          
 docker logs {ID_CONTAINER} -f | less
 docker ps                           
 docker stop                         
+
 ##unix kill signal 10s timeout      
 docker kill                         
 ```
 
 ### Layers and Tagging
+Showing Layers and how to preserve state
+
 ```sh 
 docker run -it ubuntu:12.04           
 cat /etc/os-release                   
-##layer                               
+
+##creating layer                               
 docker run -it ubuntu                 
 figlet hello                          
 apt update                            
 apt install figlet                    
+
+#saving layer
 docker diff {ID_CONTAINER}            
 docker commit {ID_CONTAINER}          
 docker images                         
@@ -67,10 +77,8 @@ docker tag {ID_IMAGE} {NAME_IMAGE}
 docker run my_figlet  figlet message  
 ```
 
+###Dockerfile demo
 
-## Exercise 2
-
-Running services:
 
 ```sh
 ### Dockerfile                                                                     
@@ -102,6 +110,8 @@ docker pul  nginx:alpine
 
 ### Multibuild stage
 
+Demonstrating compiled application and using multisatge build to optimize container
+
 ```sh
 docker build -t hello 2dockerfile.yaml
 ```
@@ -111,11 +121,12 @@ docker build -t hello 2dockerfile.yaml
 Modifying Nginx files:
 
 ```sh
+#testing nginx and modifing file
 docker  run --rm --name my_rick_roll -p 8080:8080 modem7/docker-rickroll:latest 
 docker  run --rm --name my_nginx -p 8080:80 nginx                               
 docker exec -it my_nginx  bash                                                  
 
-
+#demo files
 cat <<EOL > /usr/share/nginx/html/index.htnl                                      
 <!DOCTYPE html>                                                                   
 <html>                                                                            
@@ -144,7 +155,7 @@ Commercial support is available at
 
 ## Exercise 4
 
-Orchestrating multiple containers with docker compose 
+Orchestrating and scailing  multiple coing mainter containers with docker compose 
 
 ```sh
 cd dockercoins 
@@ -155,31 +166,8 @@ docker-compose ps
 docker-compose down
 ```
 
-Pushing to Docker Hub
-
-```sh
-docker image push <username>/<repository_name>:<tag>
-```
 
 ## Exercise 5
-
-Running WordPress using commands:
-
-```sh
-docker network create -d bridge wp
-
-docker run -d -p 3306:3306 --name db -e MYSQL_DATABASE=exampledb \
--e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=examplepass \ 
--e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=wp \
---restart=always mysql:5.7 
-
-docker run -d -p 8080:80 -e WORDPRESS_DB_HOST=db:3306 \
--e WORDPRESS_DB_USER=exampleuser -e WORDPRESS_DB_PASSWORD=examplepass \
--e WORDPRESS_DB_NAME=exampledb --network=wp \
---restart=always wordpress:latest
-```
-
-## Exercise 6
 
 Running WordPress using docker-compose:
 
