@@ -1,0 +1,135 @@
+#installing docker 
+https://docs.docker.com/engine/install/
+
+#installing git bash for windows users
+https://git-scm.com/downloads
+
+
+- history of LXC  and prior 
+
+- microservices
+  * simplicity 
+  * scalability
+  * upgrade
+  * downtime
+  * simplifiying debugging  
+
+- containers benefits 
+  * development life cycle 
+    * fast deplyoments in local/lab/pre/prod
+    * repitable enviroments 
+    * stateless apps 
+  * tracking exact version and making it reproducible 
+  * pets vs cattle 
+- 12 factor app 
+
+
+
+- demo 
+#intro
+docker run buysybox echo Hello Tester Day
+docker run -it ubuntu
+figlet hello 
+apt update 
+apt install figlet 
+figlet Hello Tester Day 
+
+#outputs
+docker run  jpetazzo/clock
+docker run -d jpetazzo/clock
+docker logs {ID_CONTAINER}
+docker logs {ID_CONTAINER} -f | less 
+docker ps 
+docker stop 
+##unix kill signal 10s timeout 
+docker kill 
+
+#attach dettach
+docker run -it ubuntu
+top
+##CTL+p+q
+docket attach {ID}
+##explaing CTL+C
+
+
+
+#Layers and tagging 
+docker run -it ubuntu:12.04
+cat /etc/os-release
+##layer
+docker run -it ubuntu
+figlet hello 
+apt update 
+apt install figlet 
+docker diff {ID_CONTAINER}
+docker commit {ID_CONTAINER}
+docker images 
+docker run -it {ID_IMAGE}
+history
+figlet
+docker images
+docker tag --help
+docker tag {ID_IMAGE} {NAME_IMAGE}
+docker run my_figlet  figlet message
+
+##dockefile
+cat <<EOL > Dockerfile
+FROM ubuntu 
+RUN apt update
+RUN apt install figlet
+EOL
+docker build . 
+docker images
+docker run {ID_IMAGE}  figlet Dockerfile
+
+##build cache and taggind
+docker build -t {TAG_NAME}
+docker images 
+docker history {IMAGE_NAME}
+
+##container sizes and alpine
+docker pull nginx 
+docker pul  nginx:alpine 
+
+docker  run --rm --name my_rick_roll -p 8080:8080 modem7/docker-rickroll:latest
+docker  run --rm --name my_nginx -p 8080:80 nginx
+docker exec -it my_nginx  bash
+
+
+cat <<EOL > /usr/share/nginx/html/index.htnl
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to Tester Days!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to Tester Days!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+EOL
+
+
+====Compose====
+
+docker-compose up -d
+docker-compose scale worker=3
+docker-compose top
+docker-compose ps
+docker-compose down
+
+#what next?
+kubernetes and managed services 
