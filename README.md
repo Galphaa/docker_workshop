@@ -1,6 +1,6 @@
 # Docker Workshop 
 
-This repo contains a list of commands used on workshop "Docker". It includes also sample application we can build and run by own or using https://killercoda.com/docker
+This repo contains a list of commands used on workshop "Docker". It includes also sample application we can build and run by own or using https://killercoda.com/docker inside VM install sudo apt 	docker-buildx
 
 
 ## Exercise 1
@@ -82,20 +82,15 @@ docker run my_figlet  figlet message
 
 ```sh
 ### Dockerfile                                                                     
-cat <<EOL > dockerfile.yaml                                                        
-FROM ubuntu                                                                     
-RUN apt update                                                                  
-RUN apt install figlet                                                          
-EOL                                                                             
 
-docker build dockerfile.yaml                                                                 
+docker build example/Dockerfile
 docker images                                                                   
-docker run {ID_IMAGE}  figlet dockerfile.yaml                                        
+docker run {ID_IMAGE}  example/Dockerfile
 ```
                                                                                 
 ### Build cache and taggind                                                       
 ```sh
-docker build -t {TAG_NAME} dockerfile.yaml
+docker build -t {TAG_NAME} example/Dockerfile
 docker images                                                                   
 docker history {IMAGE_NAME}                                                     
 ```
@@ -113,7 +108,7 @@ docker pul  nginx:alpine
 Demonstrating compiled application and using multisatge build to optimize container
 
 ```sh
-docker build -t hello 2dockerfile.yaml
+docker build -t hello golang/Dockerfile
 ```
 
 ## Exercise 3
@@ -127,7 +122,7 @@ docker  run --rm --name my_nginx -p 8080:80 nginx
 docker exec -it my_nginx  bash                                                  
 
 #demo files
-cat <<EOL > /usr/share/nginx/html/index.htnl                                      
+cat <<EOL > /usr/share/nginx/html/index.html                                      
 <!DOCTYPE html>                                                                   
 <html>                                                                            
 <head>                                                                            
@@ -151,6 +146,8 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>                                        
 </body>                                                                           
 </html>                                                                           
+
+EOL
 ```
 
 ## Exercise 4
